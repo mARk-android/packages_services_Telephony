@@ -1530,8 +1530,12 @@ public class PhoneInterfaceManager extends ITelephony.Stub {
                     android.provider.Settings.Global.PREFERRED_NETWORK_MODE, 0);
             }
             network = TelephonyManager.NETWORK_MODE_GSM_UMTS;
-        } else {
-            network = pNetwork;
+        } else {            
+            try {
+              network = TelephonyManager.NETWORK_MODE_LTE_TDSCDMA_CDMA_EVDO_GSM_WCDMA;
+            } catch (Exception e) {
+              network = pNetwork;
+            }
         }
 
         aphone.setPreferredNetworkType(network,
