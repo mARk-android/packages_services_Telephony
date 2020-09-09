@@ -370,7 +370,8 @@ public class NotificationMgr {
             }
 
             PendingIntent pendingIntent =
-                    PendingIntent.getActivity(mContext, subId /* requestCode */, intent, 0);
+                    PendingIntent.getActivity(mContext, subId /* requestCode */, intent,
+                            PendingIntent.FLAG_IMMUTABLE);
 
             Resources res = mContext.getResources();
             PersistableBundle carrierConfig = PhoneGlobals.getInstance().getCarrierConfigForSubId(
@@ -560,7 +561,7 @@ public class NotificationMgr {
             SubscriptionInfoHelper.addExtrasToIntent(
                     intent, mSubscriptionManager.getActiveSubscriptionInfo(subId));
             builder.setContentIntent(PendingIntent.getActivity(mContext, subId /* requestCode */,
-                    intent, 0));
+                    intent, PendingIntent.FLAG_IMMUTABLE));
             mNotificationManager.notifyAsUser(
                     Integer.toString(subId) /* tag */,
                     CALL_FORWARD_NOTIFICATION,
@@ -614,7 +615,8 @@ public class NotificationMgr {
         }
 
         intent.putExtra(Settings.EXTRA_SUB_ID, subId);
-        PendingIntent contentIntent = PendingIntent.getActivity(mContext, subId, intent, 0);
+        PendingIntent contentIntent = PendingIntent.getActivity(
+                mContext, subId, intent, PendingIntent.FLAG_IMMUTABLE);
 
         CharSequence contentTitle = mContext.getText(roamingOn
                 ? R.string.roaming_on_notification_title
@@ -774,7 +776,8 @@ public class NotificationMgr {
                     mContext.getString(R.string.mobile_network_settings_class)));
         }
         intent.putExtra(GsmUmtsOptions.EXTRA_SUB_ID, subId);
-        builder.setContentIntent(PendingIntent.getActivity(mContext, 0, intent, 0));
+        builder.setContentIntent(PendingIntent.getActivity(
+                mContext, 0, intent, PendingIntent.FLAG_IMMUTABLE));
         mNotificationManager.notifyAsUser(
                 Integer.toString(subId) /* tag */,
                 SELECTED_OPERATOR_FAIL_NOTIFICATION,
